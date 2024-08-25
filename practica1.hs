@@ -67,10 +67,52 @@ sumaAlternadaInv (x:[]) = x
 sumaAlternadaInv xs = foldr (\x y -> x-y) 0 xs
 
 
+--5)
+--elementosEnPosicionesPares no está dada por el esquema de recursión estructural porque el caso recursivo utiliza el parámetro xs y g en expresiones
+--distintas a g xs.
+--entrelazar si está dada por un esquema de recursión estructural.
 
---5) re dificil 
---preguntar 
-permutaciones :: (Eq t) => [t] -> [t]
-permutaciones [] = []
+--6)
+--a)
+sacarUna :: (Eq a) => a -> [a] ->[a]
+sacarUna x [] = []
+sacarUna x (y:ys) =if x==y then ys else [y]++ sacarUna x ys
+
+--b)
+--Porque utilizando foldr deberiamos eliminar si o si todas las apariciones del elemento,ya que no puede terminar bajo una condición.
+--Si por alguna razón,foldr fuera una función con terminación condicional,es decir,que se ejecuta hasta cumplir una condicion,de todas formas
+--eliminaria la última aparciión,no la primera.
+
+--c)
+insertarOrdenado :: Ord a => a -> [a] -> [a] 
+insertarOrdenado x [] = (x:[])
+insertarOrdenado x (y:xs) = if x<=y then x:y:xs else y: insertarOrdenado x xs 
+
+--8)
+
+--I)
+mapPares :: (a->a->c) -> [(a,a)] -> [c]
+mapPares f [] = []
+mapPares f ((x,y):xs) = f x y : mapPares f xs 
+--no se si entendí la consigna 
+
+--II)
+armarPares :: [a] -> [b] -> [(a,b)]
+armarPares [] xs = []
+armarPares xs [] = []
+armarPares (x:xs) (y:ys) = (x,y) : armarPares xs ys 
 
 
+--armarPares1 :: [a] -> [b] -> [(a,b)]
+--armarPares1 [] = id
+--armarPares1 (x:xs)  = \ys if null ys then [] else [(x,head ys)] ++ armarPares1 xs (tail ys)
+--no se pq no funcionaaaaaaaaaaaaaaaaaaaa
+
+--III)
+--iii. mapDoble, una variante de mapPares, que toma una función currifcada de dos argumentos y dos listas
+--(de igual longitud), y devuelve una lista de aplicaciones de la función a cada elemento correspondiente de
+--las dos listas. Esta función en Haskell se llama zipWith.
+
+mapDoble :: (a->b->c) -> [a] -> [b] -> [c]
+mapDoble f [] [] = [] --requiere = las listas tienen = longitud 
+mapDoble f (x:xs) (y:ys) = f x y  : mapDoble f xs ys 
