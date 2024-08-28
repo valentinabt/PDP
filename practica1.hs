@@ -1,11 +1,11 @@
 --Practica 1 : Programación Funcional 
 --2)
---curry :: ((a->b)->c)->(a->b->c)
---curry f (x,y) = \x y -> f (x,y)
+curry :: ((a,b)->c)->(a->b->c)
+curry f  = \x -> \y -> f (x,y) 
 
---unCurry :: (a->b->c) -> (a->b)->c
---unCurry f a b = \(a,b) -> f a b 
---a chequear 
+unCurry :: (a->b->c) -> ((a,b)->c)
+unCurry f  = \(a,b) -> f a b 
+
 --3)
 --I) 
 sum :: Num a => [a] -> a 
@@ -71,6 +71,11 @@ sumaAlternadaInv xs = foldr (\x y -> x-y) 0 xs
 --elementosEnPosicionesPares no está dada por el esquema de recursión estructural porque el caso recursivo utiliza el parámetro xs y g en expresiones
 --distintas a g xs.
 --entrelazar si está dada por un esquema de recursión estructural.
+entrelazar :: [Int] -> [Int] -> [Int]
+entrelazar _ [] = _
+entrelazar [] _ = _
+entrelazar xs ys = foldr (\x rec -> x : recorrerLaOtraLista rec ys ) [] xs
+    where recorrerLaOtraLista = if(ys==[])then([])else y: recorrerLaOtraLista rec (tail ys ) 
 
 --6)
 --a)
